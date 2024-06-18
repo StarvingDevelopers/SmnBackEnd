@@ -33,4 +33,16 @@ public class AccountController {
         Account account = this.accountService.getAccountByEmail(email);
         return ResponseEntity.ok(account);
     }
+
+    @DeleteMapping("/delete/{username}")
+    public ResponseEntity<Boolean> deleteAccount(@PathVariable String username) {
+        boolean result = this.accountService.deleteAccountByUsername(username);
+        return ResponseEntity.ok(result);
+    }
+
+    @DeleteMapping("/delete/{email}")
+    public ResponseEntity<Boolean> deleteAccountByEmail(@PathVariable String email) {
+        boolean result = this.accountService.deleteAccountByEmail(email);
+        return ResponseEntity.ok(result);
+    }
 }
