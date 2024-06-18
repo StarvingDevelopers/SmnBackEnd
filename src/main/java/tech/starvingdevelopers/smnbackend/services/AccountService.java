@@ -48,4 +48,22 @@ public class AccountService {
 
         return account.get();
     }
+
+    public boolean deleteAccountByUsername(String username) {
+        Optional<Account> account = this.accountRepository.findByUsername(username);
+        if (account.isEmpty()) {
+            throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
+        }
+
+        return this.accountRepository.deleteAccountByUsername(username);
+    }
+
+    public boolean deleteAccountByEmail(String email) {
+        Optional<Account> account = this.accountRepository.findByEmail(email);
+        if (account.isEmpty()) {
+            throw new AccountNotFoundByEmailException("Account Not Found! (" + email + ")");
+        }
+
+        return this.accountRepository.deleteAccountByEmail(email);
+    }
 }
