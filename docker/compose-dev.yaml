@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:alpine3.20
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: "smn"
+      POSTGRES_USER: "dev"
+      POSTGRES_PASSWORD: "1234"
+    ports:
+      - 5432:5432
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
