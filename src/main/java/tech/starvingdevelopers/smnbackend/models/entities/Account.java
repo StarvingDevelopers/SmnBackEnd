@@ -43,8 +43,9 @@ public class Account {
     @CreationTimestamp
     private LocalDate createdAt;
 
-    public Account(String username, String email, String password, String gender, LocalDate birthdate) {
+    public Account(String username, String nickname, String email, String password, String gender, LocalDate birthdate) {
         this.username = username;
+        this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.gender = gender;
