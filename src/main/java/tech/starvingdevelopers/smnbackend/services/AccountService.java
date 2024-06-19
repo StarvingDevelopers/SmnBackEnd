@@ -5,8 +5,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.account.AccountAlreadyExistsException;
 import tech.starvingdevelopers.smnbackend.exceptions.account.AccountNotFoundByUsernameException;
-import tech.starvingdevelopers.smnbackend.models.dto.account.CreateAccountDTO;
-import tech.starvingdevelopers.smnbackend.models.dto.account.UpdateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.input.CreateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.models.repositories.AccountRepository;
 
@@ -31,12 +32,12 @@ public class AccountService {
         return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
     }
 
-    public Account getAccountByUsername(String username) {
+    public GetAccountDTO getAccountByUsername(String username) {
         Optional<Account> account = this.accountRepository.findByUsername(username);
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
 
-        return account.get();
+        return new GetAccountDTO(account.get().getId(), account.get().getUsername(), account.get().getNickname(), account.get().getEmail(), account.get().getGender(), account.get().getBirthdate(), account.get().getCreatedAt());
     }
 
     public Account updateAccountByUsername(String username, UpdateAccountDTO updateAccountByUsernameDTO) {
@@ -52,11 +53,12 @@ public class AccountService {
 
         if (updateAccountByUsernameDTO.gender()!= null)
             account.get().setGender(updateAccountByUsernameDTO.gender());
-
+        /*
         if (updateAccountByUsernameDTO.password() != null) {
             String encryptedPassword = bCryptPasswordEncoder.encode(updateAccountByUsernameDTO.password());
             account.get().setPassword(encryptedPassword);
         }
+         */
 
         return this.accountRepository.save(account.get());
     }

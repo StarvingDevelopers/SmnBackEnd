@@ -3,8 +3,9 @@ package tech.starvingdevelopers.smnbackend.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import tech.starvingdevelopers.smnbackend.models.dto.account.CreateAccountDTO;
-import tech.starvingdevelopers.smnbackend.models.dto.account.UpdateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.input.CreateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.services.AccountService;
 
@@ -24,8 +25,8 @@ public class AccountController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<Account> getAccount(@PathVariable String username) {
-        Account account = this.accountService.getAccountByUsername(username);
+    public ResponseEntity<GetAccountDTO> getAccount(@PathVariable String username) {
+        GetAccountDTO account = this.accountService.getAccountByUsername(username);
         return ResponseEntity.ok(account);
     }
 
