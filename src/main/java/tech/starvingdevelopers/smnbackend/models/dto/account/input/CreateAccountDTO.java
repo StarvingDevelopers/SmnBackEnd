@@ -1,4 +1,4 @@
-package tech.starvingdevelopers.smnbackend.models.dto.account;
+package tech.starvingdevelopers.smnbackend.models.dto.account.input;
 
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 
