@@ -46,10 +46,10 @@ public class AccountService {
         return new GetAccountDTO(account.get().getId(), account.get().getUsername(), account.get().getNickname(), account.get().getEmail(), account.get().getGender(), account.get().getBirthdate(), account.get().getCreatedAt());
     }
 
-    public Account updateAccountByUsername(String username, UpdateAccountDTO updateAccountByUsernameDTO) {
-        Optional<Account> account = this.accountRepository.findByUsername(username);
+    public Account updateAccountByUsername(UpdateAccountDTO updateAccountByUsernameDTO) {
+        Optional<Account> account = this.accountRepository.findByUsername(updateAccountByUsernameDTO.username());
         if (account.isEmpty())
-            throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
+            throw new AccountNotFoundByUsernameException("Account Not Found! (" + updateAccountByUsernameDTO.username() + ")");
 
         if (updateAccountByUsernameDTO.nickname() != null)
             account.get().setNickname(updateAccountByUsernameDTO.nickname());
