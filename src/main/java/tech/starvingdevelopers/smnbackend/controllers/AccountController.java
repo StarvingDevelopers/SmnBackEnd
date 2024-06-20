@@ -5,6 +5,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.CreateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountPasswordDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.services.AccountService;
@@ -34,6 +35,12 @@ public class AccountController {
     public ResponseEntity<Account> updateAccount(@PathVariable String username, @RequestBody @Validated UpdateAccountDTO updateAccountDTO) {
         Account account = this.accountService.updateAccountByUsername(username, updateAccountDTO);
         return ResponseEntity.ok(account);
+    }
+
+    @PostMapping("/password")
+    public ResponseEntity<Void> updateAccountPassword(@RequestBody @Validated UpdateAccountPasswordDTO updateAccountPasswordDTO) {
+        this.accountService.updatePasswordByUsername(updateAccountPasswordDTO);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete/{username}")
