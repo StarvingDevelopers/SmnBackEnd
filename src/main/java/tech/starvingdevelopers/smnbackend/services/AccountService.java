@@ -10,6 +10,7 @@ import tech.starvingdevelopers.smnbackend.models.dto.account.input.CreateAccount
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountPasswordDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.auth.input.AuthenticateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.models.repositories.AccountRepository;
 
@@ -43,7 +44,7 @@ public class AccountService {
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
 
-        return new GetAccountDTO(account.get().getId(), account.get().getUsername(), account.get().getNickname(), account.get().getEmail(), account.get().getGender(), account.get().getBirthdate(), account.get().getCreatedAt());
+        return GetAccountDTO.createDTO(account.get());
     }
 
     public Account updateAccountByUsername(UpdateAccountDTO updateAccountByUsernameDTO) {
@@ -83,5 +84,16 @@ public class AccountService {
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
 
         this.accountRepository.deleteAccountByUsername(username);
+    }
+
+    public GetAccountDTO authenticateByUsername(AuthenticateAccountDTO authenticateAccountDTO) {
+        Optional<Account> account = this.accountRepository.findByUsername(authenticateAccountDTO.username());
+        if (account.isEmpty())
+            throw new AccountNotFoundByUsernameException("Account Not Found! (" + authenticateAccountDTO.username() + ")");
+
+        if (!this.bCryptPasswordEncoder.matches(authenticateAccountDTO.password(), account.get().getPassword()))
+            throw new AccountPasswordIncorrectlyException();
+
+        return GetAccountDTO.createDTO(account.get());
     }
 }
