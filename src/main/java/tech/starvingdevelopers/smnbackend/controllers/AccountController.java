@@ -32,9 +32,9 @@ public class AccountController {
      * @return {@link ResponseEntity} contendo {@link Account} criado e status 200 OK.
      */
     @PostMapping("/create")
-    public ResponseEntity<Account> createAccount(@RequestBody @Validated CreateAccountDTO createAccountDTO) {
+    public ResponseEntity<GetAccountDTO> createAccount(@RequestBody @Validated CreateAccountDTO createAccountDTO) {
         Account account = this.accountService.createAccount(createAccountDTO);
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(GetAccountDTO.createDTO(account));
     }
 
     /**
@@ -68,9 +68,9 @@ public class AccountController {
      * @return {@link ResponseEntity} contendo {@link Account} atualizado e status 200 OK.
      */
     @PostMapping("/update")
-    public ResponseEntity<Account> updateAccount(@RequestBody @Validated UpdateAccountDTO updateAccountDTO) {
+    public ResponseEntity<GetAccountDTO> updateAccount(@RequestBody @Validated UpdateAccountDTO updateAccountDTO) {
         Account account = this.accountService.updateAccountByUsername(updateAccountDTO);
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(GetAccountDTO.createDTO(account));
     }
 
     /**
