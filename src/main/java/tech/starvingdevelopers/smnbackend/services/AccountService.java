@@ -1,6 +1,7 @@
 package tech.starvingdevelopers.smnbackend.services;
 
 import jakarta.transaction.Transactional;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.account.AccountAlreadyExistsException;
@@ -26,6 +27,7 @@ public class AccountService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    @Cacheable(value = "account", key = "#createAccountDTO.username()")
     public Account createAccount(CreateAccountDTO createAccountDTO) {
         Optional<Account> accountByUsername = this.accountRepository.findByUsername(createAccountDTO.username());
         if (accountByUsername.isPresent())
