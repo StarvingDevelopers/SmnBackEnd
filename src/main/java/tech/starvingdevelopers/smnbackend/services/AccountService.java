@@ -27,7 +27,6 @@ public class AccountService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    @Cacheable(value = "account", key = "#createAccountDTO.username()")
     public Account createAccount(CreateAccountDTO createAccountDTO) {
         Optional<Account> accountByUsername = this.accountRepository.findByUsername(createAccountDTO.username());
         if (accountByUsername.isPresent())
@@ -41,12 +40,13 @@ public class AccountService {
         return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
     }
 
+    @Cacheable(value = "account", key = "#username")
     public GetAccountDTO getAccountByUsername(String username) {
         Optional<Account> account = this.accountRepository.findByUsername(username);
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
 
-        return GetAccountDTO.createDTO(account.get());
+        return new GetAccountDTO(account.get());
     }
 
     public Account updateAccountByUsername(UpdateAccountDTO updateAccountByUsernameDTO) {
@@ -96,6 +96,6 @@ public class AccountService {
         if (!this.bCryptPasswordEncoder.matches(authenticateAccountDTO.password(), account.get().getPassword()))
             throw new AccountPasswordIncorrectlyException();
 
-        return GetAccountDTO.createDTO(account.get());
+        return new GetAccountDTO(account.get());
     }
 }
