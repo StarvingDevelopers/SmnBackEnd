@@ -1,5 +1,6 @@
 package tech.starvingdevelopers.smnbackend.services;
 
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.friends.FriendRequestAlreadyExistsException;
 import tech.starvingdevelopers.smnbackend.exceptions.friends.FriendRequestNotFoundException;
@@ -26,6 +27,7 @@ public class FriendService {
         return this.friendRequestRepository.save(FriendRequestDTO.fromDTO(friendRequestDTO));
     }
 
+    @Cacheable(value = "pending_friend_requests", key = "#receiver")
     public GetPendingRequestsDTO getPendingRequests(String receiver) {
         return new GetPendingRequestsDTO(this.friendRequestRepository.findFriendRequestsByReceiver(receiver));
     }
