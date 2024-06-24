@@ -34,7 +34,7 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<GetAccountDTO> createAccount(@RequestBody @Validated CreateAccountDTO createAccountDTO) {
         Account account = this.accountService.createAccount(createAccountDTO);
-        return ResponseEntity.ok(GetAccountDTO.createDTO(account));
+        return ResponseEntity.ok(new GetAccountDTO(account));
     }
 
     /**
@@ -70,7 +70,7 @@ public class AccountController {
     @PostMapping("/update")
     public ResponseEntity<GetAccountDTO> updateAccount(@RequestBody @Validated UpdateAccountDTO updateAccountDTO) {
         Account account = this.accountService.updateAccountByUsername(updateAccountDTO);
-        return ResponseEntity.ok(GetAccountDTO.createDTO(account));
+        return ResponseEntity.ok(new GetAccountDTO(account));
     }
 
     /**
