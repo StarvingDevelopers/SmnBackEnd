@@ -6,8 +6,8 @@ import tech.starvingdevelopers.smnbackend.models.email.EmailType;
 public class WelcomeEmail extends EmailBase {
     private final String nickname;
 
-    public WelcomeEmail(String to, EmailType emailType, String nickname) {
-        super(to, emailType);
+    public WelcomeEmail(String to, String nickname) {
+        super(to, EmailType.WELCOME_EMAIL);
         this.nickname = nickname;
     }
 
