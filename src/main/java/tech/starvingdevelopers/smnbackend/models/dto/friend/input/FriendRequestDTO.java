@@ -4,7 +4,7 @@ import tech.starvingdevelopers.smnbackend.models.entities.FriendRequest;
 
 public record FriendRequestDTO(String sender, String receiver) {
 
-    public static FriendRequest fromDTO(FriendRequestDTO dto) {
+    public static FriendRequest toFriendRequest(FriendRequestDTO dto) {
         return new FriendRequest(dto.sender(), dto.receiver());
     }
 }

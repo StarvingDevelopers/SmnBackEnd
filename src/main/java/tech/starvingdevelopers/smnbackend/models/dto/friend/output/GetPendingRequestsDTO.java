@@ -9,10 +9,5 @@ import java.util.List;
 
 @Getter
 @Setter
-public class GetPendingRequestsDTO implements Serializable {
-    private List<FriendRequest> friendRequestsList;
-
-    public GetPendingRequestsDTO(List<FriendRequest> friendRequestsList) {
-        this.friendRequestsList = friendRequestsList;
-    }
+public record GetPendingRequestsDTO(List<FriendRequest> friendRequests) implements Serializable {
 }
