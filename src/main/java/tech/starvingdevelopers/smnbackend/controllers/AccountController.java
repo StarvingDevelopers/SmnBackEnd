@@ -19,6 +19,18 @@ public class AccountController {
         this.accountService = accountService;
     }
 
+    @GetMapping("/validate/email/{email}")
+    public ResponseEntity<Void> validateEmail(@PathVariable String email) {
+        accountService.validateEmail(email);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/validate/username/{username}")
+    public ResponseEntity<Void> validateUsername(@PathVariable String username) {
+        accountService.validateUsername(username);
+        return ResponseEntity.ok().build();
+    }
+
     /**
      * Rota de Criação Conta.
      * <p>

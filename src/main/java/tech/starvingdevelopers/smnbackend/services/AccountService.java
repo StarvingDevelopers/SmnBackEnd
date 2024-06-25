@@ -26,15 +26,19 @@ public class AccountService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-    public Account createAccount(CreateAccountDTO createAccountDTO) {
-        Optional<Account> accountByUsername = this.accountRepository.findByUsername(createAccountDTO.username());
-        if (accountByUsername.isPresent())
-            throw new AccountAlreadyExistsException("Account already Exists! (" + accountByUsername.get().getUsername() + ")");
-
-        Optional<Account> accountByEmail = this.accountRepository.findByEmail(createAccountDTO.email());
+    public void validateEmail(String email) {
+        Optional<Account> accountByEmail = this.accountRepository.findByEmail(email);
         if (accountByEmail.isPresent())
             throw new AccountAlreadyExistsException("Account already Exists! (" + accountByEmail.get().getEmail() + ")");
+    }
 
+    public void validateUsername(String username) {
+        Optional<Account> accountByUsername = this.accountRepository.findByUsername(username);
+        if (accountByUsername.isPresent())
+            throw new AccountAlreadyExistsException("Account already Exists! (" + accountByUsername.get().getUsername() + ")");
+    }
+
+    public Account createAccount(CreateAccountDTO createAccountDTO) {
         String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
         return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
     }
