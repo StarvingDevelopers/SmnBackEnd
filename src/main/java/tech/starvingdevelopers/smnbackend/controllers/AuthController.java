@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.auth.input.AuthenticateAccountDTO;
+import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.services.AccountService;
 
 @RestController
@@ -23,8 +24,8 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<GetAccountDTO> authenticate(HttpServletRequest request, @RequestBody @Validated AuthenticateAccountDTO authenticateAccountDTO) {
         System.out.println(getClientIp(request));
-        GetAccountDTO account = this.accountService.authenticateByUsername(authenticateAccountDTO);
-        return ResponseEntity.ok(account);
+        Account account = this.accountService.authenticateByUsername(authenticateAccountDTO);
+        return ResponseEntity.ok(GetAccountDTO.fromAccount(account));
     }
 
     private String getClientIp(HttpServletRequest request) {

@@ -10,7 +10,6 @@ import tech.starvingdevelopers.smnbackend.exceptions.account.AccountPasswordInco
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.CreateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccountPasswordDTO;
-import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.auth.input.AuthenticateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.models.repositories.AccountRepository;
@@ -41,12 +40,12 @@ public class AccountService {
     }
 
     @Cacheable(value = "account", key = "#username")
-    public GetAccountDTO getAccountByUsername(String username) {
+    public Account getAccountByUsername(String username) {
         Optional<Account> account = this.accountRepository.findByUsername(username);
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + username + ")");
 
-        return new GetAccountDTO(account.get());
+        return account.get();
     }
 
     public Account updateAccountByUsername(UpdateAccountDTO updateAccountByUsernameDTO) {
@@ -88,7 +87,7 @@ public class AccountService {
         this.accountRepository.deleteAccountByUsername(username);
     }
 
-    public GetAccountDTO authenticateByUsername(AuthenticateAccountDTO authenticateAccountDTO) {
+    public Account authenticateByUsername(AuthenticateAccountDTO authenticateAccountDTO) {
         Optional<Account> account = this.accountRepository.findByUsername(authenticateAccountDTO.username());
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + authenticateAccountDTO.username() + ")");
@@ -96,6 +95,6 @@ public class AccountService {
         if (!this.bCryptPasswordEncoder.matches(authenticateAccountDTO.password(), account.get().getPassword()))
             throw new AccountPasswordIncorrectlyException();
 
-        return new GetAccountDTO(account.get());
+        return account.get();
     }
 }

@@ -34,7 +34,7 @@ public class AccountController {
     @PostMapping("/create")
     public ResponseEntity<GetAccountDTO> createAccount(@RequestBody @Validated CreateAccountDTO createAccountDTO) {
         Account account = this.accountService.createAccount(createAccountDTO);
-        return ResponseEntity.ok(new GetAccountDTO(account));
+        return ResponseEntity.ok(GetAccountDTO.fromAccount(account));
     }
 
     /**
@@ -51,8 +51,8 @@ public class AccountController {
      */
     @GetMapping("/{username}")
     public ResponseEntity<GetAccountDTO> getAccount(@PathVariable String username) {
-        GetAccountDTO account = this.accountService.getAccountByUsername(username);
-        return ResponseEntity.ok(account);
+        Account account = this.accountService.getAccountByUsername(username);
+        return ResponseEntity.ok(GetAccountDTO.fromAccount(account));
     }
 
     /**
@@ -70,7 +70,7 @@ public class AccountController {
     @PostMapping("/update")
     public ResponseEntity<GetAccountDTO> updateAccount(@RequestBody @Validated UpdateAccountDTO updateAccountDTO) {
         Account account = this.accountService.updateAccountByUsername(updateAccountDTO);
-        return ResponseEntity.ok(new GetAccountDTO(account));
+        return ResponseEntity.ok(GetAccountDTO.fromAccount(account));
     }
 
     /**
