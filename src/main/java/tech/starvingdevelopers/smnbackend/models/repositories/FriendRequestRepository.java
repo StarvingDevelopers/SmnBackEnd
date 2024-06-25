@@ -12,9 +12,7 @@ import java.util.Optional;
 @EnableRedisRepositories
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, Long> {
 
-    //RETORNAR A SUA LISTA DE PEDIDOS PENDENTES!
     List<FriendRequest> findFriendRequestsByReceiver(String receiver);
 
-    //RETORNA SE EXISTE UM CONVITE JÁ EXISTENTE DESSE USUÁRIO PARA O OUTRO!
-    Optional<FriendRequest> findFriendRequestsBySenderAndReceiver( String sender, String receiver);
+    Optional<FriendRequest> findFriendRequestsBySenderAndReceiver(String sender, String receiver);
 }

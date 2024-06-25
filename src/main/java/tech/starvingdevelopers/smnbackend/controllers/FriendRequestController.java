@@ -6,14 +6,16 @@ import org.springframework.web.bind.annotation.*;
 import tech.starvingdevelopers.smnbackend.models.dto.friend.input.FriendRequestDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetPendingRequestsDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.FriendRequest;
-import tech.starvingdevelopers.smnbackend.services.FriendService;
+import tech.starvingdevelopers.smnbackend.services.FriendRequestService;
+
+import java.util.List;
 
 @RestController
-@RequestMapping("/friend")
+@RequestMapping("/friend-request")
 public class FriendRequestController {
-    private final FriendService friendService;
+    private final FriendRequestService friendService;
 
-    public FriendRequestController(FriendService friendService) {
+    public FriendRequestController(FriendRequestService friendService) {
         this.friendService = friendService;
     }
 
@@ -23,15 +25,21 @@ public class FriendRequestController {
         return ResponseEntity.ok(friendRequest);
     }
 
-    @GetMapping("/pending-requests")
-    public ResponseEntity<GetPendingRequestsDTO> getPendingFriendRequests(String receiver) {
-        GetPendingRequestsDTO pendingRequestsDTO = this.friendService.getPendingRequests(receiver);
-        return ResponseEntity.ok(pendingRequestsDTO);
+    @GetMapping("/pending-requests/{username}")
+    public ResponseEntity<GetPendingRequestsDTO> getPendingFriendRequests(@PathVariable String username) {
+        List<FriendRequest> pendingRequests = this.friendService.getPendingRequests(username);
+        return ResponseEntity.ok(new GetPendingRequestsDTO(pendingRequests));
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFriendRequest(@PathVariable Long id) {
         this.friendService.deleteFriendRequest(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/accept/{id}")
+    public ResponseEntity<Void> acceptFriendRequest(@PathVariable Long id) {
+        this.friendService.acceptFriendRequest(id);
         return ResponseEntity.ok().build();
     }
 }

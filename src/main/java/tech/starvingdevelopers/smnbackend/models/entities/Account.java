@@ -19,9 +19,6 @@ import java.time.LocalDate;
 public class Account implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
     @Column(unique = true, nullable = false, length = 36)
     private String username;
 

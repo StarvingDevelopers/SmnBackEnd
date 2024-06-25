@@ -9,22 +9,9 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-public class GetAccountDTO implements Serializable {
-    private int id;
-    private String username;
-    private String nickname;
-    private String email;
-    private String gender;
-    private LocalDate birthdate;
-    private LocalDate createdAt;
+public record GetAccountDTO(String username, String nickname, String email, String gender, LocalDate birthdate, LocalDate createdAt) implements Serializable {
 
-    public GetAccountDTO(Account account) {
-        this.id = account.getId();
-        this.username = account.getUsername();
-        this.nickname = account.getNickname();
-        this.email = account.getEmail();
-        this.gender = account.getGender();
-        this.birthdate = account.getBirthdate();
-        this.createdAt = account.getCreatedAt();
+    public static GetAccountDTO fromAccount(Account account) {
+        return new GetAccountDTO(account.getUsername(), account.getNickname(), account.getEmail(), account.getGender(), account.getBirthdate(), account.getCreatedAt());
     }
 }
