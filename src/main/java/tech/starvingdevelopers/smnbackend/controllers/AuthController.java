@@ -3,10 +3,7 @@ package tech.starvingdevelopers.smnbackend.controllers;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tech.starvingdevelopers.smnbackend.models.dto.account.output.GetAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.auth.input.AuthenticateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
@@ -14,6 +11,7 @@ import tech.starvingdevelopers.smnbackend.services.AccountService;
 
 @RestController
 @RequestMapping("/auth")
+@CrossOrigin
 public class AuthController {
     private final AccountService accountService;
 

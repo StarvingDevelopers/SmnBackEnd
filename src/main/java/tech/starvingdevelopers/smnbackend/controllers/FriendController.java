@@ -10,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("friend")
+@CrossOrigin
 public class FriendController {
     private final FriendService friendService;
 

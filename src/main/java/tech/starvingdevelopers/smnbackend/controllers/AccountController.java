@@ -12,6 +12,7 @@ import tech.starvingdevelopers.smnbackend.services.AccountService;
 
 @RestController()
 @RequestMapping("/account")
+@CrossOrigin()
 public class AccountController {
     private final AccountService accountService;
 
