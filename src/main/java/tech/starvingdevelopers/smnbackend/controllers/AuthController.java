@@ -19,6 +19,18 @@ public class AuthController {
         this.accountService = accountService;
     }
 
+    /**
+     * Rota de Autenticação de Conta.
+     * <p>
+     *     Este método está mapeando para a solicitação HTTP POST do endpoint "/authenticate".
+     *     Validando o objeto {@link AuthenticateAccountDTO} recebido delegado a autenticação
+     *     da conta para o link {@link AccountService}. Após a autenticação bem-sucedida da conta, retorna
+     *     o objeto {@link Account} conrrespondente. Dentro de um {@link ResponseEntity} com status 200 OK.
+     * </p>
+     *
+     * @param authenticateAccountDTO DTO contendo detalhes necessários para a autenticação da conta.
+     * @return {@link ResponseEntity} contendo {@link Account} requisitada e status 200 OK.
+     */
     @PostMapping("/authenticate")
     public ResponseEntity<GetAccountDTO> authenticate(HttpServletRequest request, @RequestBody @Validated AuthenticateAccountDTO authenticateAccountDTO) {
         System.out.println(getClientIp(request));
