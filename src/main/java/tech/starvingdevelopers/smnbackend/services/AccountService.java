@@ -19,10 +19,12 @@ import java.util.Optional;
 @Service
 public class AccountService {
     private final AccountRepository accountRepository;
+    private final ProfileService profileService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public AccountService(AccountRepository accountRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public AccountService(AccountRepository accountRepository, ProfileService profileService,  BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.accountRepository = accountRepository;
+        this.profileService = profileService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -40,7 +42,9 @@ public class AccountService {
 
     public Account createAccount(CreateAccountDTO createAccountDTO) {
         String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
-        return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        Account account = this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
+        return account;
     }
 
     @Cacheable(value = "account", key = "#username")
@@ -57,8 +61,10 @@ public class AccountService {
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + updateAccountByUsernameDTO.username() + ")");
 
+        /*
         if (updateAccountByUsernameDTO.nickname() != null)
             account.get().setNickname(updateAccountByUsernameDTO.nickname());
+         */
 
         if (updateAccountByUsernameDTO.email() != null)
             account.get().setEmail(updateAccountByUsernameDTO.email());

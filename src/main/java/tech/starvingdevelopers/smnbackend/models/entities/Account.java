@@ -22,9 +22,6 @@ public class Account implements Serializable {
     @Column(unique = true, nullable = false, length = 36)
     private String username;
 
-    @Column(nullable = false, length = 64)
-    private String nickname;
-
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -41,9 +38,8 @@ public class Account implements Serializable {
     @CreationTimestamp
     private LocalDate createdAt;
 
-    public Account(String username, String nickname, String email, String password, String gender, LocalDate birthdate) {
+    public Account(String username, String email, String password, String gender, LocalDate birthdate) {
         this.username = username;
-        this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.gender = gender;
