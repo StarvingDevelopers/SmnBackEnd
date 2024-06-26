@@ -12,6 +12,6 @@ import java.util.List;
 @EnableRedisRepositories
 public interface FriendRepository extends JpaRepository<Friend, Long> {
 
-    @Query("SELECT f FROM Friend f WHERE f.leftUsername.username = :username OR f.rightUsername.username = :username")
+    @Query("SELECT f FROM Friend f WHERE f.leftUsername = :username OR f.rightUsername = :username")
     List<Friend> findFriendsByUsername(String username);
 }

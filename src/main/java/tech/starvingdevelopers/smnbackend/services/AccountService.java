@@ -47,7 +47,7 @@ public class AccountService {
         return account;
     }
 
-    @Cacheable(value = "account", key = "#username")
+    //@Cacheable(value = "account", key = "#username")
     public Account getAccountByUsername(String username) {
         Optional<Account> account = this.accountRepository.findByUsername(username);
         if (account.isEmpty())

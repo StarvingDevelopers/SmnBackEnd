@@ -1,6 +1,5 @@
 package tech.starvingdevelopers.smnbackend.services;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.friends.FriendRequestAlreadyExistsException;
 import tech.starvingdevelopers.smnbackend.exceptions.friends.FriendRequestNotFoundException;
@@ -36,7 +35,6 @@ public class FriendRequestService {
         return this.friendRequestRepository.save(new FriendRequest(senderAccount.getUsername(), receiverAccount.getUsername()));
     }
 
-    @Cacheable(value = "pending_friend_requests", key = "#receiver")
     public List<FriendRequest> getPendingRequests(String receiver) {
         return this.friendRequestRepository.findFriendRequestsByReceiver(receiver);
     }
@@ -54,10 +52,7 @@ public class FriendRequestService {
         if (friendRequest.isEmpty())
             throw new FriendRequestNotFoundException("Friend request not found! (" + id + ")");
 
-        Account sender = this.accountService.getAccountByUsername(friendRequest.get().getSender());
-        Account receiver = this.accountService.getAccountByUsername(friendRequest.get().getReceiver());
-
-        Friend friend = new Friend(sender, receiver);
+        Friend friend = new Friend(friendRequest.get().getSender(), friendRequest.get().getReceiver());
         this.friendRepository.save(friend);
         this.friendRequestRepository.deleteById(id);
     }
