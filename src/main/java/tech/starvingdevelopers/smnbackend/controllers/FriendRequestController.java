@@ -27,7 +27,6 @@ public class FriendRequestController {
      *    Validando o objeto {@link FriendRequestDTO} recebido delegando a criação do pedido
      *    para o {@link FriendRequestService}. Após a criação bem-sucedida, retorna o objeto
      *    {@link FriendRequest} criado. Dentro de um {@link ResponseEntity} com status 200 OK
-     *
      * </p>
      * @param friendRequestDTO DTO com os detalhes necessários para a criação de um pedido de amizade
      * @return {@link ResponseEntity} contendo {@link FriendRequest} criado e status 200 OK
@@ -41,7 +40,7 @@ public class FriendRequestController {
     /**
      * Rota de Recuperação de Pedido de Amizade
      * <p>
-     *     Este método mapedado para a solicitação HTTP GET no endpoint "/pending-request/{username}".
+     *     Este método está mapeado para a solicitação HTTP GET no endpoint "/pending-request/{username}".
      *     Busca detalhes de pedidos de amizade da conta associada ao nome de usuário fornecido. Delegando
      *     para o {@link FriendRequestService}. Após a recuperação bem-sucedida, retorna os detalhes da lista
      *     para em um objeto {@link GetPendingRequestsDTO} dentro de um {@link ResponseEntity} com um status 200 OK
@@ -76,8 +75,8 @@ public class FriendRequestController {
      * Rota para aceitar um pedido de amizade
      * <p>
      *     Este método mapeado para a solicitação HTTP POST do endpoint "/accept/{id}".
-     *     Recebe um id de um pedido de amizade como variavel de caminho e delega a adição a lista de amigos
-     *     para o {@link FriendRequestService}. Após a adição bem-sucedida, retorna um respota sem conteúdo
+     *     Recebe um id de um pedido de amizade como uma variável de caminho e delega a adição a lista de amigos
+     *     para o {@link FriendRequestService}. Após a adição bem-sucedida, retorna um resposta sem conteúdo
      *     com status 200 Ok.
      * </p>
      * @param id código do pedido de amizade.
