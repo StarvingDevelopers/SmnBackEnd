@@ -25,7 +25,7 @@ public class AuthController {
      *     Este método está mapeando para a solicitação HTTP POST do endpoint "/authenticate".
      *     Validando o objeto {@link AuthenticateAccountDTO} recebido delegado a autenticação
      *     da conta para o link {@link AccountService}. Após a autenticação bem-sucedida da conta, retorna
-     *     o objeto {@link Account} conrrespondente. Dentro de um {@link ResponseEntity} com status 200 OK.
+     *     o objeto {@link Account} correspondente. Dentro de um {@link ResponseEntity} com status 200 OK.
      * </p>
      *
      * @param authenticateAccountDTO DTO contendo detalhes necessários para a autenticação da conta.

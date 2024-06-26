@@ -38,7 +38,7 @@ public class FriendController {
     /**
      * Roda de Exclusão de Amigo.
      * <p>
-     *     Esse método mapeado para a soliciatação HTTP DELETE no endpoint "/delete/{id}".
+     *     Esse método mapeado para a solicitação HTTP DELETE no endpoint "/delete/{id}".
      *     Recebe o id do usuário como uma variável de caminho delega a exclusão do id da lista
      *     de amigos para o {@link FriendService}. Após a exclusão bem-sucedia do id, retorna uma resposta
      *     sem conteúdo e status 200 OK

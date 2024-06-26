@@ -1,7 +1,6 @@
 package tech.starvingdevelopers.smnbackend.services;
 
 import jakarta.transaction.Transactional;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.account.AccountAlreadyExistsException;
@@ -47,7 +46,6 @@ public class AccountService {
         return account;
     }
 
-    //@Cacheable(value = "account", key = "#username")
     public Account getAccountByUsername(String username) {
         Optional<Account> account = this.accountRepository.findByUsername(username);
         if (account.isEmpty())
@@ -60,11 +58,6 @@ public class AccountService {
         Optional<Account> account = this.accountRepository.findByUsername(updateAccountByUsernameDTO.username());
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + updateAccountByUsernameDTO.username() + ")");
-
-        /*
-        if (updateAccountByUsernameDTO.nickname() != null)
-            account.get().setNickname(updateAccountByUsernameDTO.nickname());
-         */
 
         if (updateAccountByUsernameDTO.email() != null)
             account.get().setEmail(updateAccountByUsernameDTO.email());
