@@ -7,6 +7,6 @@ import java.time.LocalDate;
 public record CreateAccountDTO(String username, String nickname, String email, String password, String gender, LocalDate birthdate) {
 
     public Account toAccount(String encryptPassword) {
-        return new Account(username, nickname, email, encryptPassword, gender, birthdate);
+        return new Account(username, email, encryptPassword, gender, birthdate);
     }
 }
