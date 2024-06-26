@@ -26,7 +26,7 @@ public class FriendController {
      *     o {@link FriendService}. Após a recuperação bem sucedida, retorna as informações
      *     da lista em um objeto {@link GetFriendListRequestDTO} dentro de um {@link ResponseEntity} com status 200 OK
      * </p>
-     * @param username nome do usuario para a recuperação da lista
+     * @param username nome do usuário para a recuperação da lista
      * @return {@link ResponseEntity} contendo {@link GetFriendListRequestDTO} recuperado e status 200 OK
      */
     @GetMapping("/friend-list/{username}")

@@ -22,18 +22,14 @@ public class Friend implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "left_relation_user")
-    private Account leftUsername;
+    private String leftUsername;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "right_relation_user")
-    private Account rightUsername;
+    private String rightUsername;
 
     @CreationTimestamp
     private LocalDate createdAt;
 
-    public Friend(Account leftUsername, Account rightUsername) {
+    public Friend(String leftUsername, String rightUsername) {
         this.leftUsername = leftUsername;
         this.rightUsername = rightUsername;
     }

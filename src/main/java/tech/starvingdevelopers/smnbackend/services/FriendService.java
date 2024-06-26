@@ -1,6 +1,5 @@
 package tech.starvingdevelopers.smnbackend.services;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.friends.FriendNotFoundException;
 import tech.starvingdevelopers.smnbackend.models.entities.Friend;
@@ -17,7 +16,6 @@ public class FriendService {
         this.friendRepository = friendRepository;
     }
 
-    @Cacheable(value = "friend_list", key = "#username")
     public List<Friend> getFriendList(String username) {
         return this.friendRepository.findFriendsByUsername(username);
     }

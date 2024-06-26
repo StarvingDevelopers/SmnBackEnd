@@ -1,5 +1,6 @@
 package tech.starvingdevelopers.smnbackend.services;
 
+import jakarta.transaction.Transactional;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.profile.ProfileNotFound;
@@ -21,7 +22,7 @@ public class ProfileService {
         this.profileRepository.save(new Profile(username, nickname));
     }
 
-    @Cacheable(value = "profile", key = "#username")
+    //@Cacheable(value = "profile", key = "#username")
     public Profile getProfile(String username) {
         Optional<Profile> profile = this.profileRepository.findByUsername(username);
         if (profile.isEmpty())
@@ -30,7 +31,8 @@ public class ProfileService {
         return profile.get();
     }
 
-    @Cacheable(value = "profile", key = "#updateProfileDTO.username()")
+    //@Cacheable(value = "profile", key = "#updateProfileDTO.username()")
+    @Transactional
     public Profile updateProfile(UpdateProfileDTO updateProfileDTO) {
         Optional<Profile> profile = this.profileRepository.findByUsername(updateProfileDTO.username());
         if (profile.isEmpty())
