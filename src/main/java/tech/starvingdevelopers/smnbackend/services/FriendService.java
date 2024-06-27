@@ -16,6 +16,15 @@ public class FriendService {
         this.friendRepository = friendRepository;
     }
 
+    public void createFriend(Friend friend) {
+        this.friendRepository.save(friend);
+    }
+
+    public boolean isFriend(String leftUsername, String rightUsername) {
+        Optional<Friend> relation = this.friendRepository.findRelation(leftUsername, rightUsername);
+        return relation.isPresent();
+    }
+
     public List<Friend> getFriendList(String username) {
         return this.friendRepository.findFriendsByUsername(username);
     }
