@@ -40,10 +40,14 @@ public class AccountService {
     }
 
     public Account createAccount(CreateAccountDTO createAccountDTO) {
-        String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
-        Account account = this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        Optional<Account> account = this.accountRepository.findByUsername(createAccountDTO.username());
+        if (account.isPresent())
+            throw new AccountAlreadyExistsException("Account already Exists! (" + account.get().getUsername() + ")");
+
         this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
-        return account;
+
+        String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
+        return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
     }
 
     public Account getAccountByUsername(String username) {
