@@ -5,5 +5,5 @@ import tech.starvingdevelopers.smnbackend.models.entities.Friend;
 import java.io.Serializable;
 import java.util.List;
 
-public record GetFriendListRequestDTO(List<Friend> friends) implements Serializable {
+public record GetFriendListDTO(List<Friend> friends) implements Serializable {
 }

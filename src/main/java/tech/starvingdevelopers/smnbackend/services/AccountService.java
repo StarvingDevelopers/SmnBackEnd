@@ -40,9 +40,13 @@ public class AccountService {
     }
 
     public Account createAccount(CreateAccountDTO createAccountDTO) {
-        Optional<Account> account = this.accountRepository.findByUsername(createAccountDTO.username());
-        if (account.isPresent())
-            throw new AccountAlreadyExistsException("Account already Exists! (" + account.get().getUsername() + ")");
+        Optional<Account> usernameAccount = this.accountRepository.findByUsername(createAccountDTO.username());
+        if (usernameAccount.isPresent())
+            throw new AccountAlreadyExistsException("Account already Exists! (" + usernameAccount.get().getUsername() + ")");
+
+        Optional<Account> emailAccount = this.accountRepository.findByEmail(createAccountDTO.email());
+        if (emailAccount.isPresent())
+            throw new AccountAlreadyExistsException("Account already Exists! (" + emailAccount.get().getEmail() + ")");
 
         this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
 
@@ -63,10 +67,10 @@ public class AccountService {
         if (account.isEmpty())
             throw new AccountNotFoundByUsernameException("Account Not Found! (" + updateAccountByUsernameDTO.username() + ")");
 
-        if (updateAccountByUsernameDTO.email() != null)
+        if (!updateAccountByUsernameDTO.email().isEmpty())
             account.get().setEmail(updateAccountByUsernameDTO.email());
 
-        if (updateAccountByUsernameDTO.gender()!= null)
+        if (!updateAccountByUsernameDTO.gender().isEmpty())
             account.get().setGender(updateAccountByUsernameDTO.gender());
 
         return this.accountRepository.save(account.get());

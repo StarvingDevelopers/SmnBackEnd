@@ -4,7 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import tech.starvingdevelopers.smnbackend.models.dto.friend.input.FriendRequestDTO;
-import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetPendingRequestsDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetPendingDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.FriendRequest;
 import tech.starvingdevelopers.smnbackend.services.FriendRequestService;
 
@@ -43,15 +43,15 @@ public class FriendRequestController {
      *     Este método está mapeado para a solicitação HTTP GET no endpoint "/pending-request/{username}".
      *     Busca detalhes de pedidos de amizade da conta associada ao nome de usuário fornecido. Delegando
      *     para o {@link FriendRequestService}. Após a recuperação bem-sucedida, retorna os detalhes da lista
-     *     para em um objeto {@link GetPendingRequestsDTO} dentro de um {@link ResponseEntity} com um status 200 OK
+     *     para em um objeto {@link GetPendingDTO} dentro de um {@link ResponseEntity} com um status 200 OK
      * </p>
      * @param username nome do usuário para a recuperação dos pedidos pendentes
-     * @return {@link ResponseEntity} contendo {@link GetPendingRequestsDTO} recuperado e status 200 OK
+     * @return {@link ResponseEntity} contendo {@link GetPendingDTO} recuperado e status 200 OK
      */
     @GetMapping("/pending-requests/{username}")
-    public ResponseEntity<GetPendingRequestsDTO> getPendingFriendRequests(@PathVariable String username) {
+    public ResponseEntity<GetPendingDTO> getPendingFriendRequests(@PathVariable String username) {
         List<FriendRequest> pendingRequests = this.friendService.getPendingRequests(username);
-        return ResponseEntity.ok(new GetPendingRequestsDTO(pendingRequests));
+        return ResponseEntity.ok(new GetPendingDTO(pendingRequests));
     }
 
     /**

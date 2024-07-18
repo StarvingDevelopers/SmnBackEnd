@@ -2,8 +2,11 @@ package tech.starvingdevelopers.smnbackend.controllers;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetFriendListRequestDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetFriendListDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.friend.output.GetFriendListWithDetailsDTO;
+import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.models.entities.Friend;
+import tech.starvingdevelopers.smnbackend.models.entities.Profile;
 import tech.starvingdevelopers.smnbackend.services.FriendService;
 
 import java.util.List;
@@ -24,15 +27,21 @@ public class FriendController {
      *     Este método está mapeando para a solicitação HTTP GET no endpoint "/friend-list/{username}".
      *     Busca informações da lista de amigos de um usuário. Delegando a tarefa para
      *     o {@link FriendService}. Após a recuperação bem sucedida, retorna as informações
-     *     da lista em um objeto {@link GetFriendListRequestDTO} dentro de um {@link ResponseEntity} com status 200 OK
+     *     da lista em um objeto {@link GetFriendListDTO} dentro de um {@link ResponseEntity} com status 200 OK
      * </p>
      * @param username nome do usuário para a recuperação da lista
-     * @return {@link ResponseEntity} contendo {@link GetFriendListRequestDTO} recuperado e status 200 OK
+     * @return {@link ResponseEntity} contendo {@link GetFriendListDTO} recuperado e status 200 OK
      */
     @GetMapping("/friend-list/{username}")
-    public ResponseEntity<GetFriendListRequestDTO> getFriendListRequests(@PathVariable String username) {
+    public ResponseEntity<GetFriendListDTO> getFriendListRequests(@PathVariable String username) {
         List<Friend> friends = this.friendService.getFriendList(username);
-        return ResponseEntity.ok(new GetFriendListRequestDTO(friends));
+        return ResponseEntity.ok(new GetFriendListDTO(friends));
+    }
+
+    @GetMapping("/friend-list-details/{username}")
+    public ResponseEntity<GetFriendListWithDetailsDTO> getFriendListWithDetails(@PathVariable String username) {
+        List<Profile> friendsProfile = this.friendService.getFriendListWithDetails(username);
+        return ResponseEntity.ok(new GetFriendListWithDetailsDTO(friendsProfile));
     }
 
     /**

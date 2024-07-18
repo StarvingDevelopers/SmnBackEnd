@@ -35,13 +35,13 @@ public class ProfileService {
         if (profile.isEmpty())
             throw new ProfileNotFound("Profile not found! (" + updateProfileDTO.username() + ")");
 
-        if (updateProfileDTO.nickname() != null)
+        if (updateProfileDTO.nickname() != null && !updateProfileDTO.nickname().isEmpty())
             profile.get().setNickname(updateProfileDTO.nickname());
 
-        if (updateProfileDTO.description() != null)
+        if (updateProfileDTO.description() != null && !updateProfileDTO.description().isEmpty())
             profile.get().setDescription(updateProfileDTO.description());
 
-        if (updateProfileDTO.profileImage() != null)
+        if (updateProfileDTO.profileImage() != null &&!updateProfileDTO.profileImage().isEmpty())
             profile.get().setProfileImage(updateProfileDTO.profileImage());
 
         return this.profileRepository.save(profile.get());
