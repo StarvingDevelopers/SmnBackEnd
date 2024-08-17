@@ -48,10 +48,11 @@ public class AccountService {
         if (emailAccount.isPresent())
             throw new AccountAlreadyExistsException("Account already Exists! (" + emailAccount.get().getEmail() + ")");
 
-        this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
-
         String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
-        return this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        Account savedAccount = this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        if (savedAccount.getCreatedAt() != null)
+            this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
+        return savedAccount;
     }
 
     public Account getAccountByUsername(String username) {
