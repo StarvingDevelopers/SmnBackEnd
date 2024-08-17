@@ -18,6 +18,9 @@ public class Group {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false, length = 36)
+    private String ownerName;
+
     @Column(nullable = false, length = 64)
     private String customName;
 
