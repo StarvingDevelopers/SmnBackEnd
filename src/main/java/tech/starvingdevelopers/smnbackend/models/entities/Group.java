@@ -36,11 +36,12 @@ public class Group {
     @Column(nullable = false, length = 7)
     private String baseColor;
 
-    public Group(String ownerName, String customName, String searchableName, String description, String baseColor) {
+    public Group(String ownerName, String customName, String searchableName, String description, String profileImage, String baseColor) {
         this.ownerName = ownerName;
         this.customName = customName;
         this.searchableName = searchableName;
         this.description = description;
+        this.profileImage = profileImage;
         this.baseColor = baseColor;
     }
 }
