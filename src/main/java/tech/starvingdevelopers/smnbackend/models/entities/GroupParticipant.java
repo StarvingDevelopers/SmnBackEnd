@@ -19,8 +19,13 @@ public class GroupParticipant {
     private Long id;
 
     @Column(nullable = false)
-    private int groupID;
+    private long groupID;
 
     @Column(nullable = false, length = 36)
     private String username;
+
+    public GroupParticipant(long groupID, String username) {
+        this.groupID = groupID;
+        this.username = username;
+    }
 }
