@@ -31,7 +31,7 @@ public class GroupService {
         return this.groupRepository.save(createGroupDTO.toGroup(searchableName));
     }
 
-    public Group getGroup(String groupName) {
+    public Group getGroupByCustomName(String groupName) {
         Optional<Group> customNameGroup = this.groupRepository.findByCustomName(groupName);
         if (customNameGroup.isEmpty())
             throw new GroupNotFoundException("Group not found! (" + groupName + ")");
@@ -39,22 +39,30 @@ public class GroupService {
         return customNameGroup.get();
     }
 
-    @Transactional
-    public Group updateGroup(long id, UpdateGroupDTO updateGroupDTO) {
+    public Group getGroupByID(long id) {
         Optional<Group> group = this.groupRepository.findById(id);
         if (group.isEmpty())
             throw new GroupNotFoundException("Group not found! (" + id + ")");
 
-        if (!updateGroupDTO.customName().isEmpty())
+        return group.get();
+    }
+
+    @Transactional
+    public Group updateGroup(UpdateGroupDTO updateGroupDTO) {
+        Optional<Group> group = this.groupRepository.findById(updateGroupDTO.id());
+        if (group.isEmpty())
+            throw new GroupNotFoundException("Group not found! (" + updateGroupDTO.id() + ")");
+
+        if (updateGroupDTO.customName() != null)
             group.get().setCustomName(updateGroupDTO.customName());
 
-        if (!updateGroupDTO.description().isEmpty())
+        if (updateGroupDTO.description() != null)
             group.get().setDescription(updateGroupDTO.description());
 
-        if (!updateGroupDTO.profileImage().isEmpty())
+        if (updateGroupDTO.profileImage() != null)
             group.get().setProfileImage(updateGroupDTO.profileImage());
 
-        if (!updateGroupDTO.baseColor().isEmpty())
+        if (updateGroupDTO.baseColor() != null)
             group.get().setBaseColor(updateGroupDTO.baseColor());
 
         return this.groupRepository.save(group.get());
