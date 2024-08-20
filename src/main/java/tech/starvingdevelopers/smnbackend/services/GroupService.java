@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import tech.starvingdevelopers.smnbackend.exceptions.group.GroupAlreadyExistsException;
 import tech.starvingdevelopers.smnbackend.exceptions.group.GroupNotFoundException;
 import tech.starvingdevelopers.smnbackend.models.dto.group.input.CreateGroupDTO;
+import tech.starvingdevelopers.smnbackend.models.dto.group.input.CreateParticipantDTO;
 import tech.starvingdevelopers.smnbackend.models.dto.group.input.UpdateGroupDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Group;
 import tech.starvingdevelopers.smnbackend.models.repositories.GroupRepository;
@@ -15,9 +16,11 @@ import java.util.Optional;
 @Service
 public class GroupService {
     private final GroupRepository groupRepository;
+    private final GroupParticipantService groupParticipantService;
 
-    public GroupService(GroupRepository groupRepository) {
+    public GroupService(GroupRepository groupRepository, GroupParticipantService groupParticipantService) {
         this.groupRepository = groupRepository;
+        this.groupParticipantService = groupParticipantService;
     }
 
     public Group createGroup(CreateGroupDTO createGroupDTO) {
@@ -25,9 +28,9 @@ public class GroupService {
         if (customNameGroup.isPresent())
             throw new GroupAlreadyExistsException("Group already exists! (" + customNameGroup.get().getCustomName() + ")");
 
-        //TODO: ADICIONAR O DONO DO GRUPO A TABELA DE PARTICIPANTS!
-
         String searchableName = ConvertNameUtils.formatName(createGroupDTO.name());
+        Group group = this.groupRepository.save(createGroupDTO.toGroup(searchableName));
+        this.groupParticipantService.insertParticipant(new CreateParticipantDTO(group.getId(), createGroupDTO.name()));
         return this.groupRepository.save(createGroupDTO.toGroup(searchableName));
     }
 
@@ -72,6 +75,8 @@ public class GroupService {
         Optional<Group> group = this.groupRepository.findById(id);
         if (group.isEmpty())
             throw new GroupNotFoundException("Group not found! (" + id + ")");
+
+        //TODO: QUANDO EU DELETAR UM GRUPO DEVO REMOVER TODOS OS PARTICIPANTES DA TABELA!
 
         this.groupRepository.delete(group.get());
     }
