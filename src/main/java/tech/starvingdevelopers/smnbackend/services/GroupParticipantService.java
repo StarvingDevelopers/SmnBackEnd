@@ -21,7 +21,7 @@ public class GroupParticipantService {
     }
 
     public GroupParticipant insertParticipant(CreateParticipantDTO insertParticipantDTO) {
-        Optional<GroupParticipant> participant = this.groupParticipantRepository.findGroupParticipantByUsernameAndGroupId(insertParticipantDTO.username(), insertParticipantDTO.groupID());
+        Optional<GroupParticipant> participant = this.groupParticipantRepository.findGroupParticipantByUsernameAndGroupID(insertParticipantDTO.username(), insertParticipantDTO.groupID());
         if (participant.isPresent())
             throw new ParticipantAlreadyExists("Relation of " + insertParticipantDTO.username() + " and " + insertParticipantDTO.groupID() + " already Exists");
 

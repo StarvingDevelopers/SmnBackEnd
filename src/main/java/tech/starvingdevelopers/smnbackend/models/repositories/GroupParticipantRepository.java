@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface GroupParticipantRepository extends JpaRepository<GroupParticipant, Long> {
 
-    Optional<GroupParticipant> findGroupParticipantByUsernameAndGroupId(String username, Long groupId);
+    Optional<GroupParticipant> findGroupParticipantByUsernameAndGroupID(String username, Long groupID);
 
     List<GroupParticipant> findGroupParticipantByUsername(String username);
 
-    void deleteGroupParticipantByUsernameAndGroupID(String username, Long groupId);
+    void deleteGroupParticipantByUsernameAndGroupID(String username, Long groupID);
 }
