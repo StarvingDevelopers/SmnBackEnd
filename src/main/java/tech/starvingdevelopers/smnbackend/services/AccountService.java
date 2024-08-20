@@ -12,6 +12,7 @@ import tech.starvingdevelopers.smnbackend.models.dto.account.input.UpdateAccount
 import tech.starvingdevelopers.smnbackend.models.dto.auth.input.AuthenticateAccountDTO;
 import tech.starvingdevelopers.smnbackend.models.entities.Account;
 import tech.starvingdevelopers.smnbackend.models.repositories.AccountRepository;
+import tech.starvingdevelopers.smnbackend.utils.ConvertNameUtils;
 
 import java.util.Optional;
 
@@ -50,8 +51,9 @@ public class AccountService {
 
         String encryptedPassword = bCryptPasswordEncoder.encode(createAccountDTO.password());
         Account savedAccount = this.accountRepository.save(createAccountDTO.toAccount(encryptedPassword));
+        String searchableName = ConvertNameUtils.formatName(createAccountDTO.nickname());
         if (savedAccount.getCreatedAt() != null)
-            this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname());
+            this.profileService.createProfile(createAccountDTO.username(), createAccountDTO.nickname(), searchableName);
         return savedAccount;
     }
 

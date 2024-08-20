@@ -17,8 +17,8 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public void createProfile(String username, String nickname) {
-        this.profileRepository.save(new Profile(username, nickname));
+    public void createProfile(String username, String nickname, String searchableName) {
+        this.profileRepository.save(new Profile(username, nickname, searchableName));
     }
 
     public Profile getProfile(String username) {
