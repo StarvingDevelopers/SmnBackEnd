@@ -23,14 +23,18 @@ public class Profile implements Serializable {
     @Column(nullable = false, length = 64)
     private String nickname;
 
+    @Column(nullable = false, length = 64)
+    private String searchableName;
+
     @Column(length = 200)
     private String description;
 
     @Lob
     private String profileImage;
 
-    public Profile(String username, String nickname) {
+    public Profile(String username, String nickname, String searchableName) {
         this.username = username;
         this.nickname = nickname;
+        this.searchableName = searchableName;
     }
 }

@@ -7,6 +7,7 @@ import tech.starvingdevelopers.smnbackend.models.dto.profile.input.UpdateProfile
 import tech.starvingdevelopers.smnbackend.models.entities.Profile;
 import tech.starvingdevelopers.smnbackend.models.repositories.ProfileRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,8 +18,8 @@ public class ProfileService {
         this.profileRepository = profileRepository;
     }
 
-    public void createProfile(String username, String nickname) {
-        this.profileRepository.save(new Profile(username, nickname));
+    public void createProfile(String username, String nickname, String searchableName) {
+        this.profileRepository.save(new Profile(username, nickname, searchableName));
     }
 
     public Profile getProfile(String username) {
@@ -45,5 +46,9 @@ public class ProfileService {
             profile.get().setProfileImage(updateProfileDTO.profileImage());
 
         return this.profileRepository.save(profile.get());
+    }
+
+    public List<Profile> searchProfile(String search) {
+        return this.profileRepository.findBySearchableNameStartingWith(search);
     }
 }

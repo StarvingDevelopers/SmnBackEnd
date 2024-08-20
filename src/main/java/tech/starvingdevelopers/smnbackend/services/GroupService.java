@@ -11,6 +11,7 @@ import tech.starvingdevelopers.smnbackend.models.entities.Group;
 import tech.starvingdevelopers.smnbackend.models.repositories.GroupRepository;
 import tech.starvingdevelopers.smnbackend.utils.ConvertNameUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,5 +80,9 @@ public class GroupService {
         //TODO: QUANDO EU DELETAR UM GRUPO DEVO REMOVER TODOS OS PARTICIPANTES DA TABELA!
 
         this.groupRepository.delete(group.get());
+    }
+
+    public List<Group> searchGroups(String search) {
+        return this.groupRepository.findBySearchableNameStartingWith(search);
     }
 }
