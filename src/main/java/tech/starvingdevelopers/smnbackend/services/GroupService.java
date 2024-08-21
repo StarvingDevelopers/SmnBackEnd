@@ -32,7 +32,7 @@ public class GroupService {
         String searchableName = ConvertNameUtils.formatName(createGroupDTO.name());
         Group group = this.groupRepository.save(createGroupDTO.toGroup(searchableName));
         this.groupParticipantService.insertParticipant(new CreateParticipantDTO(group.getId(), createGroupDTO.name()));
-        return this.groupRepository.save(createGroupDTO.toGroup(searchableName));
+        return group;
     }
 
     public Group getGroupByCustomName(String groupName) {
