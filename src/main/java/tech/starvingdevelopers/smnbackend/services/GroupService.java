@@ -69,6 +69,9 @@ public class GroupService {
         if (updateGroupDTO.baseColor() != null)
             group.get().setBaseColor(updateGroupDTO.baseColor());
 
+        String search = ConvertNameUtils.formatName(group.get().getCustomName());
+        group.get().setSearchableName(search);
+
         return this.groupRepository.save(group.get());
     }
 
